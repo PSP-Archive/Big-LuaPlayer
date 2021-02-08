@@ -46,8 +46,14 @@
  * \version Beta 5
  */
 
-#ifndef GLIB2D_H
-#define GLIB2D_H
+/*
+ * This file has been added for the "Big LuaPlayer - project" and has more
+ * functions then the original 'gLib2D library Beta 5 version - created by geecko'.
+ * This library is used as the 2D graphics engine for the "Big LuaPlayer"
+ */
+
+#ifndef GLIB2D_H_
+#define GLIB2D_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -277,6 +283,14 @@ void g2dTerm();
  * Automatically called by the other functions.
  */
 void g2dStart();
+
+/**
+ * \brief Start filling a new display-context and store the current context list.
+ *
+ * This function will stores the current gu context and the GU system.
+ * and restore the context after Finishing filling the current display list.
+ */
+void g2dStartContext();
 
 /**
  * \brief Set the GU draw target to a texture.

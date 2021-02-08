@@ -22,17 +22,20 @@ OBJS_PSP = Common/callbacks.o \
 		   Library/glibplt.o \
 		   Library/glibtex.o \
 		   Library/glibf.o \
+		   Library/gl3dVertex.o \
 		   Library/utilitylib.o \
 		   Library/pspmodlib.o \
 		   Library/pspusblib.o \
 		   Library/adhoc.o \
 		   Library/pspsiolib.o \
-		   Library/pspirdalib.o
+		   Library/pspirdalib.o \
+		   Library/vfpu.o
 # Include the Lua modules.
 OBJS_LUA = Source/Lua_Library.o \
            Source/Lua_DebugScreen.o \
 		   Source/Lua_Controls.o \
 		   Source/Lua_System.o \
+		   Source/Lua_VfpuMath.o \
 		   Source/Lua_Utility.o \
 		   Source/Lua_Memory.o \
 		   Source/Lua_usb.o \
@@ -44,6 +47,7 @@ OBJS_LUA = Source/Lua_Library.o \
 		   Source/Lua_BmpFont.o \
 		   Source/Lua_Texture.o \
 		   Source/Lua_GL.o \
+		   Source/Lua_GL3D.o \
 		   Source/Lua_Sound.o
 #		   Source/Lua_Aalib.o
 # Include psp main application file.
@@ -71,7 +75,8 @@ LIBS_PSP = -lpsppower \
 		   -lpspvalloc \
 		   -lpspaudio \
 		   -lpspwlan -lpspnet_adhoc -lpspnet_adhocctl \
-		   -lpspsircs
+		   -lpspsircs \
+		   -lpspmath
 #		   -lvorbisidec -lpspmp3 -lpspatrac3 \
 #		   -lpspvram \
 # Add the freeType Library's.
@@ -91,7 +96,7 @@ LDFLAGS =
 
 # Set The info for the Eboot.pbp file.
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = Big LuaPlayer
+PSP_EBOOT_TITLE = Big LuaPlayer v1.10
 PSP_EBOOT_SFO =
 PSP_EBOOT_ICON = Resources/ICON0.PNG
 PSP_EBOOT_ICON1 =
@@ -101,6 +106,8 @@ PSP_EBOOT_SND0 =
 PSP_EBOOT_PSAR =
 PSP_EBOOT = EBOOT.PBP
 
+# Define to build this as a prx (instead of a static elf).
+BUILD_PRX = 1
 PSP_FW_VERSION = 150
 
 # build the psp eboot.

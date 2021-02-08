@@ -2,8 +2,8 @@
 // ------------------------------------------------------------------------
 // Lua Header file for C++.
 // <<extern "C">> not supplied automatically because Lua also compiles as C++
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 #ifndef __luaplayer_hpp
@@ -90,6 +90,17 @@ namespace luaplayer
 	// @return: bool - the result as boolean.
 	//
 	bool luaL_checkboolean (lua_State * L, int narg);
+	// -----------------------------------------------------------------------------------------------------
+
+	// -----------------------------------------------------------------------------------------------------
+	// Check if the value is a string convertable to a number with base (x).
+	//
+	// @param: L - A pointer to the current Lua_State.
+	// @param narg - the index of the lua value.
+	//
+	// @return: double - the result as boolean.
+	//
+	double luaL_tonumber (lua_State *L, int narg, int base);
 	// -----------------------------------------------------------------------------------------------------
 }
 

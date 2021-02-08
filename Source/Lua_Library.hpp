@@ -1,7 +1,7 @@
-// lua player library's ( FileName: Lua_Library.hpp )
+// lua player libraries ( FileName: Lua_Library.hpp )
 // ------------------------------------------------------------------------
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 #ifndef __Lua_Library_hpp
@@ -12,6 +12,7 @@
 #define LUA_CONTROLS_LIBNAME	"Controls"
 
 #define LUA_SYSTEM_LIBNAME	    "System"
+#define Lua_VFPUMATH       		"VfpuMath"
 #define LUA_UTILITY_LIBNAME	    "Utility"
 #define LUA_MEMORY_LIBNAME	    "Memory"
 #define LUA_USB_LIBNAME	        "usb"
@@ -25,6 +26,9 @@
 #define LUA_TEXTURE_LIBNAME	    "Texture"
 #define LUA_GL_LIBNAME	        "GL"
 
+#define LUA_GU_LIBNAME	        "Gu"
+#define LUA_GUM_LIBNAME	        "Gum"
+
 //#define LUA_AALIB_LIBNAME	    "Aalib"
 #define LUA_SOUND_LIBNAME	    "Sound"
 
@@ -34,6 +38,7 @@ LUAMOD_API int (luaopen_DebugScreen) (lua_State *L);
 LUAMOD_API int (luaopen_Controls) (lua_State *L);
 
 LUAMOD_API int (luaopen_System) (lua_State *L);
+LUAMOD_API int (luaopen_VfpuMath) (lua_State *L);
 LUAMOD_API int (luaopen_Utility) (lua_State *L);
 LUAMOD_API int (luaopen_Memory) (lua_State *L);
 LUAMOD_API int (luaopen_USB) (lua_State * L);
@@ -46,6 +51,9 @@ LUAMOD_API int (luaopen_Font) (lua_State *L);
 LUAMOD_API int (luaopen_BmpFont) (lua_State *L);
 LUAMOD_API int (luaopen_Texture) (lua_State *L);
 LUAMOD_API int (luaopen_GL) (lua_State *L);
+
+LUAMOD_API int (luaopen_GU) (lua_State *L);
+LUAMOD_API int (luaopen_GUM) (lua_State *L);
 
 //LUAMOD_API int (luaopen_Aalib) (lua_State *L);
 LUAMOD_API int (luaopen_Sound) (lua_State *L);

@@ -1,0 +1,50 @@
+Update List Big Luaplayer:
+
+--------------------------------------------------------------------------------
+Big LuaPlayer beta:
+	Build Date: 2012
+	Release Date: ....
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Big LuaPlayer version 1.00:
+	Build Date: 2013
+	Release Date: 2014
+	Updates:
+		- Updated the lua scripting engine to version 5.2.1
+		- Replaced the old basic graphics library with Geecko's glib2d graphics library.
+		- Add some new function to Geecko's graphics library.
+		- Updated the texture library.
+		- Added the Freetype library to the projects to support ttf font files.
+		- Added and updated the glibf library.
+		- Added basic sound function.
+		- Added Adhoc, Message Dialog, OSK and usb functions.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Big LuaPlayer version 1.01:
+	Build Date: 05/09-2014
+	Release Date: ....
+	Updates:
+		- Compile the eboot as a prx to support signing the eboot.
+		  (The eboot can now be signed, but the signed eboot can't be started.
+		   The "PSP" return to xmb after loading and gives a error message
+		   saying it can run the game.)
+		- Fixed the 'Font.Reset()' to only accept zero arguments.
+		- Fixed the 'Font.name([Font])' to only accept 1 arguments.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Big LuaPlayer version 1.10:
+	Build Date: 23/09-2014
+	Release Date: 24/09-2014
+	Updates:
+	    - Fixed a small bug in the sound library.
+		- Fixed a bug in the convertion methode of the texture.load() function.
+		- Added Basic Gu and Gum libraries for 3D rendeing.
+		- Added a vertrices userdata object for faster 3D rendeing.
+		- Builded lua 5.2.1 with lua_number defined as a float number.
+		- Added vpfu math function and a System.vfpuMath(enable) switch function
+		  to change the lua math function to vfpu math functions and back.
+		- Update the color functions and added color operator meta functions.
+--------------------------------------------------------------------------------

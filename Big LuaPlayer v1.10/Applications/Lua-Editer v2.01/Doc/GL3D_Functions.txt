@@ -1,0 +1,272 @@
+-----------------------------------------------------------------------------------------------------
+-- PSP Lua GL3D - v1.01 (Function list)
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Gu.clearColor([color = 0]) -- Set the current clear-color.
+Gu.clearDepth([number = 0]) -- Set the current clear-depth.
+Gu.clearStencil([number = 0]) -- Set the current stencil clear value. range [0-255]
+Gu.clear([CLBF_ENUM = 21]) -- Clear current drawbuffer.
+-- Gu Clear buffer mask mode enumeration: CLBF_ENUM
+Gu.CLBF_COLOR_BUFFER_BIT = 1
+Gu.CLBF_STENCIL_BUFFER_BIT = 2
+Gu.CLBF_DEPTH_BUFFER_BIT = 4
+Gu.CLBF_FAST_CLEAR_BIT = 16
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Gum.matrixMode(MTRX_ENUM) -- Select which matrix stack to operate on. - return nil
+Gum.loadIdentity() -- Load identity matrix.
+Gum.fastInverse() -- Invert orthonogal 4x4 matrix.
+Gum.fullInverse() -- Invert 4x4 matrix.
+Gum.ortho(left, right, buttom, top, near, far) -- Set ortho projection matrix
+Gum.perspective(fovy, acpect, near, far) -- Set perspective projection matrix.
+Gum.lookAt(eX, eY, eZ, cX, cY, cZ, uX, uY, uZ)
+Gum.translate(x, y, z) -- Translate coordinate system.
+Gum.Scale(x, y, z)
+Gum.rotateXYZ(Xr, Yr, Zr) -- Rotate around all 3 axis in order Z, Y, X.
+Gum.popMatrix() -- pop matrix from the stack.
+Gum.pushMatrix() -- push matrix on the stack.
+--Gu Matrix modes enumeration: MTRX_ENUM
+Gum.MTRX_PROJECTION = 0
+Gum.MTRX_VIEW = 1
+Gum.MTRX_MODEL = 2
+Gum.MTRX_TEXTURE = 3
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Gu.state(STATE_ENUM) -- Check GU state. return true or false.
+Gu.enable(STATE_ENUM) -- Enable GU state.
+Gu.disable(STATE_ENUM) -- Disable GU state.
+-- Gu state Mode enumeration: STATE_ENUM
+Gu.STATE_ALPHA_TEST = 0
+Gu.STATE_DEPTH_TEST = 1
+Gu.STATE_SCISSOR_TEST = 2
+Gu.STATE_STENCIL_TEST = 3
+Gu.STATE_BLEND = 4
+Gu.STATE_CULL_FACE = 5
+Gu.STATE_DITHER = 6
+Gu.STATE_FOG = 7
+Gu.STATE_CLIP_PLANES = 8
+Gu.STATE_TEXTURE_2D = 9
+Gu.STATE_LIGHTING = 10
+Gu.STATE_LIGHT0 = 11
+Gu.STATE_LIGHT1 = 12
+Gu.STATE_LIGHT2 = 13
+Gu.STATE_LIGHT3 = 14
+Gu.STATE_LINE_SMOOTH = 15
+Gu.STATE_PATCH_CULL_FACE = 16
+Gu.STATE_COLOR_TEST = 17
+Gu.STATE_COLOR_LOGIC_OP = 18
+Gu.STATE_FACE_NORMAL_REVERSE = 19
+Gu.STATE_PATCH_FACE = 20
+Gu.STATE_FRAGMENT_2X = 21
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Gu.depthFunc(FNC_ENUM) -- Select which depth-test function to use.
+Gu.depthMask(mask) -- Mask depth buffer writes.
+Gu.depthOffset(offset)
+Gu.depthRange(near, far) -- Set which range to use for depth calculations.
+Gu.blendFunc(OP_ENUM, sBLD_ENUM, dBLD_ENUM, sfix, dfix) -- Set the blending-mode.
+Gu.frontFace(FF_ENUM) -- Set the current face-order (for culling).
+Gu.logicalOp(LOG_ENUM) -- Set color logical operation.
+Gu.pixelMask(color) -- Set mask for which bits of the pixels to write.
+Gu.shadeModel(SHADE_ENUM) -- Set how primitives are shaded.
+Gu.color(color) -- Set current primitive color.
+Gu.colorFunc(FNC_ENUM, color, mask) -- Set the color test function.
+Gu.stencilFunc(FNC_ENUM, ref, mask) -- Set stencil function and reference value for stencil testing.
+Gu.stencilOp(fail, zfail, zpass) -- Set the stencil test actions.
+-- GU Test Function enumeration: FNC_ENUM
+Gu.FNC_NEVER = 0
+Gu.FNC_ALWAYS = 1
+Gu.FNC_EQUAL = 2
+Gu.FNC_NOTEQUAL = 3
+Gu.FNC_LESS = 4
+Gu.FNC_LEQUAL = 5
+Gu.FNC_GREATER = 6
+Gu.FNC_GEQUAL = 7
+--Gu Blending Op enumeration: OP_ENUM
+Gu.OP_ADD = 0
+Gu.OP_SUBTRACT = 1
+Gu.OP_REVERSE_SUBTRACT = 2
+Gu.OP_MIN = 3
+Gu.OP_MAX = 4
+Gu.OP_ABS = 5
+--Gu Blending Factor enumeration: BLD_ENUM
+Gu.BLD_SRC_COLOR = 0
+Gu.BLD_DST_COLOR = 1
+Gu.BLD_ONE_MINUS_SRC_COLOR = 2
+Gu.BLD_ONE_MINUS_DST_COLOR = 3
+Gu.BLD_SRC_ALPHA = 0
+Gu.BLD_DST_ALPHA = 1
+Gu.BLD_ONE_MINUS_SRC_ALPHA = 4
+Gu.BLD_ONE_MINUS_DST_ALPHA= 5
+Gu.BLD_FIX = 10
+-- Gu Front Face Direction enumeration: FF_ENUM
+Gu.FF_CW = 0
+Gu.FF_CCW = 1
+-- Gu Logical operation enumeration: LOG_ENUM
+Gu.LOG_CLEAR = 0
+Gu.LOG_AND = 1
+Gu.LOG_AND_REVERSE = 2
+Gu.LOG_COPY = 3
+Gu.LOG_AND_INVERTED = 4
+Gu.LOG_NOOP = 5
+Gu.LOG_XOR = 6
+Gu.LOG_OR = 7
+Gu.LOG_NOR = 8
+Gu.LOG_EQUIV = 9
+Gu.LOG_INVERTED = 10
+Gu.LOG_OR_REVERSE = 11
+Gu.LOG_COPY_INVERTED = 12
+Gu.LOG_OR_INVERTED = 13
+Gu.LOG_NAND = 14
+Gu.LOG_SET = 15
+-- Gu Shading Model enumeration: SHADE_ENUM
+Gu.SHADE_FLAT = 0
+Gu.SHADE_SMOOTH = 1
+--GU Stencil Operations: ref, mask, fail, zfail, zpass
+STENCIL_KEEP = 0
+STENCIL_ZERO = 1
+STENCIL_REPLACE = 2
+STENCIL_INVERT = 3
+STENCIL_INCR = 4
+STENCIL_DECR = 5
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Gu.texImage(texture [,mips [,maxMips]]) -- Set current texturemap.
+Gu.palette(plt) -- Set current palette.
+Gu.texLevelMode(TLM_ENUM, bias) -- Set texture-level mode (mipmapping).
+Gu.texMapMode(TMM_ENUM, a1, a2) -- Set the texture-mapping mode.
+Gu.texProjMapMode(TPM_ENUM) -- Set texture projection-map mode.
+Gu.texSlope(slope)
+Gu.texFunc(TFX, TCC) -- Set how textures are applied.
+Gu.texEnvColor(color) -- Specify the texture environment color.
+Gu.texFilter(minTFL_ENUM, magTFL_ENUM) -- Set how the texture is filtered.
+Gu.texWrap(uWRAP_ENUM, vWRAP_ENUM) -- Set if the texture should repeat or clamp.
+Gu.texScale(u, v) -- Set texture scale
+Gu.texOffset(u, v) -- Set texture offset.
+-- Gu Texture Level mode: TLM_ENUM
+TLM_TEXTURE_AUTO = 0
+TLM_TEXTURE_CONST = 1
+TLM_TEXTURE_SLOPE = 2
+-- Gu Texture-mapping mode: TMM_ENUM
+TMM_TEXTURE_COORDS = 0
+TMM_TEXTURE_MATRIX = 1
+TMM_ENVIRONMENT_MAP = 2
+-- Texture Projection Map mode: TPM_ENUM
+TPM_POSITION = 0
+TPM_UV = 1
+TPM_NORMALIZED_NORMAL = 2
+TPM_NORMAL = 3
+-- Gu Texture Effect enumeration: TFX
+Gu.TFX_MODULATE = 0
+Gu.TFX_DECAL = 1
+Gu.TFX_BLEND = 2
+Gu.TFX_REPLACE = 3
+Gu.TFX_ADD = 4
+-- Gu Texture Color Component enumeration: TCC
+Gu.TCC_RGB = 0
+Gu.TCC_RGBA = 1
+-- Gu Texture Filter enumeration: TFL_ENUM
+Gu.TFL_NEAREST = 0
+Gu.TFL_LINEAR = 1
+Gu.TFL_NEAREST_MIPMAP_NEAREST = 4
+Gu.TFL_LINEAR_MIPMAP_NEAREST = 5
+Gu.TFL_NEAREST_MIPMAP_LINEAR = 6
+Gu.TFL_LINEAR_MIPMAP_LINEAR = 7
+-- Gu Wrap Mode enumeration: WRAP_ENUM
+Gu.WRAP_REPEAT = 0
+Gu.WRAP_CLAMP = 1
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Gu.ambientColor(color)
+Gu.ambient(color)
+Gu.light(idx, LTYPE_ENUM, LCOM_ENUM, x, y, z) -- Set light parameters.
+Gu.lightAtt(idx, att1, att2, att3) -- Set light attenuation.
+Gu.lightColor(idx, LCOM_ENUM, color) -- Set light color.
+Gu.lightMode(LMODE_ENUM) -- Set light mode.
+Gu.lightSpot(idx, x, y, z, exp, cut) -- Set spotlight parameters.
+Gu.colorMaterial(LCOM_ENUM) -- Set which color components that the material will receive.
+Gu.material(LMODE_ENUM, color)
+Gu.modelColor(emissive, ambient, diffuse, specular)
+Gu.Specular(power) -- Set the specular power for the material.
+-- Gu Light Type enumeration: LTYPE_ENUM
+Gu.LTYPE_DIRECTIONAL = 0
+Gu.LTYPE_POINTLIGHT = 1
+Gu.LTYPE_SPOTLIGHT = 2
+-- Gu Light Components enumeration: LCOM_ENUM
+Gu.LCOM_AMBIENT = 1
+Gu.LCOM_DIFFUSE = 2
+Gu.LCOM_SPECULAR = 4
+Gu.LCOM_AMBIENT_AND_DIFFUSE = 1 + 2 = 3
+Gu.LCOM_DIFFUSE_AND_SPECULAR = 2 + 4 = 6
+Gu.LCOM_UNKNOWN_LIGHT_COMPONENT = 8
+-- Gu Wrap Mode enumeration: LMODE_ENUM
+Gu.LMODE_SINGLE_COLOR = 0
+Gu.LMODE_SEPARATE_SPECULAR_COLOR= 1
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Gu.fog(near, far, color) -- Set Fog.
+-----------------------------------------------------------------------------------------------------
+Gu.drawArray(prim, vtype, table [,indices])
+-----------------------------------------------------------------------------------------------------
+Gu.start3d() -- Start 3D rendering
+Gu.finish3d() -- Finish 3D rendering
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+-- Lua_Vertex userdata functions:
+Gum.verticesNew(prim, vtype, table [,indices]) -- Create a new vertices list.
+Gum.VerticesLoad(path) -- load a vertices list from a .vrt file.
+Gum.VerticesType3D(vertices, enable) -- Set Vertex type of the Vertices list to 3D.
+Gum.VerticesIndex(vertices [,n ,len] [,enable]) -- Enable or disable the indices list. returns [n, len] if argc == 1
+Gum.verticesDraw(vertices) -- Draw the Vertices list.
+Gum.VerticesPush(vertices) -- returns prim, vtype, table [,indices]
+Gum.VerticesGet(vertices, n) -- Get the vertex components. returns (...) all vertex components
+Gum.VerticesSet([vertices], n, (...)) -- Set the vertex components.
+Gum.VerticesSave([vertices], filename) -- Save the Vertices list to a .vrt file.
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+-- Gu Primitive types enumeration:
+Gum.PRIM_POINTS = 0
+Gum.PRIM_LINES = 1
+Gum.PRIM_LINE_STRIP = 2
+Gum.PRIM_TRIANGLES = 3
+Gum.PRIM_TRIANGLE_STRIP = 4
+Gum.PRIM_TRIANGLE_FAN = 5
+Gum.PRIM_SPRITES = 6
+-- Gu Vertex Declarations enumeration:
+Gum.VERT_TEXTURE_BITS = 3
+Gum.VERT_COLOR_BITS = 28
+Gum.VERT_NORMAL_BITS = 96
+Gum.VERT_VERTEX_BITS = 384
+Gum.VERT_INDEX_16BIT = 4096
+Gum.VERT_TRANSFORM_3D = 0
+Gum.VERT_TRANSFORM_2D = 8388608
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+--Vertices table format:
+--tVRT = {{[texture] [,color] [,normal] [,vertex]}, ...}
+--tVRT = {{[u, v] [,color] [,x ,y ,z] [,x ,y ,z]}, ...}
+--u = the u position factor of the texture (1 = texture:width())
+--V = the v position factor of the texture (1 = texture:height()).
+--color = The color of the vertex.
+--x = De x position of the vertex.
+--Y = De y position of the vertex.
+--z = De z position of the vertex.
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+--indices table format:
+--tINDS = {index, ...}
+--index = The poostion of a vertex in the Vertices array.
+--        Position range is from Zero to len-1.
+--        Number size is 16 bit unsigned short.
+-----------------------------------------------------------------------------------------------------

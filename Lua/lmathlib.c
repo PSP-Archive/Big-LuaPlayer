@@ -249,10 +249,10 @@ static const luaL_Reg mathlib[] = {
   {"fmod",   math_fmod},
   {"frexp", math_frexp},
   {"ldexp", math_ldexp},
+  {"log",   math_log},
 #if defined(LUA_COMPAT_LOG10)
   {"log10", math_log10},
 #endif
-  {"log",   math_log},
   {"max",   math_max},
   {"min",   math_min},
   {"modf",   math_modf},

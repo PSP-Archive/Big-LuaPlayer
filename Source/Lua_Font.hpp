@@ -1,8 +1,8 @@
 // PSP Lua Font ( FileName: Lua_Font.hpp )
 // ------------------------------------------------------------------------
 // Header file for LuaPlayer.
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 #ifndef __lua_Font_hpp

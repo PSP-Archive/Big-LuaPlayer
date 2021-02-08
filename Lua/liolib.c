@@ -339,7 +339,11 @@ static int io_lines (lua_State *L) {
 
 
 static int read_number (lua_State *L, FILE *f) {
+#if defined(LUA_FLOAT_BUILD)
+  double d;
+#else
   lua_Number d;
+#endif
   if (fscanf(f, LUA_NUMBER_SCAN, &d) == 1) {
     lua_pushnumber(L, d);
     return 1;

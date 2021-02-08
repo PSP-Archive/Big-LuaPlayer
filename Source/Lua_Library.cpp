@@ -1,7 +1,7 @@
-// lua player library's ( FileName: Lua_Library.cpp )
+// lua player libraries ( FileName: Lua_Library.cpp )
 // ------------------------------------------------------------------------
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 // Include the Lua header files for C++.
@@ -27,6 +27,9 @@ namespace luaplayer
 		{LUA_BMPFONT_LIBNAME, luaopen_BmpFont},
 		{LUA_TEXTURE_LIBNAME, luaopen_Texture},
 		{LUA_GL_LIBNAME, luaopen_GL},
+
+		{LUA_GU_LIBNAME, luaopen_GU},
+		{LUA_GUM_LIBNAME, luaopen_GUM},
 
 		//{LUA_AALIB_LIBNAME, luaopen_Aalib},
 		{LUA_SOUND_LIBNAME, luaopen_Sound},

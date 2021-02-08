@@ -1,7 +1,7 @@
 // Psp Sound library ( FileName: soundlib.c )
 // ------------------------------------------------------------------------
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 // Include psp Header files.
@@ -863,7 +863,7 @@ static void _ampRaw(sound_raw raw, float amp)
 // -----------------------------------------------------------------------------------------------------
 static soundBuf _getBufferRaw(sound_raw raw, unsigned int pos)
 {
-	if (pos > raw->dataLength)
+	if (pos >= raw->dataLength)
 		return NULL;
 	else
 		return ((raw->data) + pos);
@@ -1034,7 +1034,7 @@ static void _ampPol(sound_pol pol, float amp)
 // -----------------------------------------------------------------------------------------------------
 static sound_note _getBufferPol(sound_pol pol, unsigned int pos)
 {
-	if (pos > pol->dataLength)
+	if (pos >= pol->dataLength)
 		return NULL;
 	else
 		return ((pol->data) + pos);

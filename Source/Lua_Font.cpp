@@ -1,7 +1,7 @@
 // PSP Lua Font ( FileName: Lua_Font.cpp )
 // ------------------------------------------------------------------------
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 // Include C/C++ header files.
@@ -266,7 +266,7 @@ static int lua_FontReset (lua_State * L)
 {
 	// Read the argument list.
 	int narg = lua_gettop(L);
-	if (narg != 1) return luaL_error(L, "Argument error: Font.reset() takes no arguments.");
+	if (narg) return luaL_error(L, "Argument error: Font.reset() takes no arguments.");
 
 	// Reset the current font state.
 	gfReset();
@@ -282,7 +282,7 @@ static int lua_FontName (lua_State * L)
 {
 	// Read the argument list.
 	int narg = lua_gettop(L);
-	if (narg != 1 && narg != 2) return luaL_error(L, "Argument error: Font.name(font) takes no arguments.");
+	if (narg != 1) return luaL_error(L, "Argument error: Font.name(font) takes no arguments.");
 
 	// Get the Font Pointer.
 	lua_Font fntPtr = *luaL_checkFont(L, 1);
@@ -493,4 +493,10 @@ LUAMOD_API int luaopen_Font(lua_State * L)
 
 	return 1; // Number of results.
 }
+// -----------------------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------------------
+// Updates Version 1.01: 05/09-2014
+// 	  - Fixed the 'Font.Reset()' to only accept zero arguments.
+//    - Fixed the 'Font.name([Font])' to only accept 1 arguments.
 // -----------------------------------------------------------------------------------------------------

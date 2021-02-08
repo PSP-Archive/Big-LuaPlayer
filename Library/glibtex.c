@@ -461,13 +461,13 @@ g2dTexture* _g2dTexLoadPNG(FILE *fp, int psm)
 			for (y = 0; y < height; y++){
 				png_read_row(png_ptr, (u8*) line, NULL);
 				for (x = 0; x < width; x++){
-					C = line[x]; G2D_TARGET_SETPIXEL((g2dColor*)tex->data, x, y, tex->tw, G2D_COLOR_TO16(C));}}
+					C = line[x]; G2D_TARGET_SETPIXEL((g2dColor16*)tex->data, x, y, tex->tw, G2D_COLOR_TO16(C));}}
 			break;
 		case G2D_PSM_T8: // Indexed, 8-bit
 			for (y = 0; y < height; y++){
 				png_read_row(png_ptr, (u8*) line, NULL);
 				for (x = 0; x < width; x++){
-					C = line[x]; G2D_TARGET_SETPIXEL((g2dColor*)tex->data, x, y, tex->tw, G2D_COLOR_TO8(C));}}
+					C = line[x]; G2D_TARGET_SETPIXEL((g2dColor8*)tex->data, x, y, tex->tw, G2D_COLOR_TO8(C));}}
 			break;
 		case G2D_PSM_T4: // Indexed, 4-bit (2 pixels per byte)
 			for (y = 0; y < height; y++){
@@ -652,14 +652,14 @@ g2dTexture* _g2dTexLoadJPEG(FILE *fp, int psm)
 					jpeg_read_scanlines(&dinfo, &line, 1);
 					for (x=0; x<width; x++){
 						g2dColor gray = line[x]; g2dColor c = gray | (gray << 8) | (gray << 16) | 0xff000000;
-						G2D_TARGET_SETPIXEL((g2dColor*)tex->data, x, y, tex->tw, G2D_COLOR_TO16(c));}}
+						G2D_TARGET_SETPIXEL((g2dColor16*)tex->data, x, y, tex->tw, G2D_COLOR_TO16(c));}}
 			}else{
 				while (dinfo.output_scanline < dinfo.output_height){
 					int y = dinfo.output_scanline; int x; u8 *pline;
 					jpeg_read_scanlines(&dinfo, &line, 1); pline = line;
 					for (x=0; x<width; x++){
 						g2dColor c; c = (*(pline++)); c |= (*(pline++)) << 8; c |= (*(pline++)) << 16; c |= 0xff000000;
-						G2D_TARGET_SETPIXEL((g2dColor*)tex->data, x, y, tex->tw, G2D_COLOR_TO16(c));}}
+						G2D_TARGET_SETPIXEL((g2dColor16*)tex->data, x, y, tex->tw, G2D_COLOR_TO16(c));}}
 			}
 			break;
 		case G2D_PSM_T8: // Indexed, 8-bit
@@ -668,14 +668,14 @@ g2dTexture* _g2dTexLoadJPEG(FILE *fp, int psm)
 					int y = dinfo.output_scanline; int x;
 					jpeg_read_scanlines(&dinfo, &line, 1);
 					for (x=0; x<width; x++){
-						G2D_TARGET_SETPIXEL((g2dColor*)tex->data, x, y, tex->tw, line[x]);}}
+						G2D_TARGET_SETPIXEL((g2dColor8*)tex->data, x, y, tex->tw, line[x]);}}
 			}else{
 				while (dinfo.output_scanline < dinfo.output_height){
 					int y = dinfo.output_scanline; int x; u8 *pline;
 					jpeg_read_scanlines(&dinfo, &line, 1); pline = line;
 					for (x=0; x<width; x++){
 						g2dColor c; c = (*(pline++)); c |= (*(pline++)) << 8; c |= (*(pline++)) << 16; c |= 0xff000000;
-						G2D_TARGET_SETPIXEL((g2dColor*)tex->data, x, y, tex->tw, G2D_COLOR_TO8(c));}}
+						G2D_TARGET_SETPIXEL((g2dColor8*)tex->data, x, y, tex->tw, G2D_COLOR_TO8(c));}}
 			}
 			break;
 		case G2D_PSM_T4: // Indexed, 4-bit (2 pixels per byte)

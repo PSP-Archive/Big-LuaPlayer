@@ -1,7 +1,7 @@
 // Big LUAPlayer ( FileName: main.cpp )
 // -----------------------------------------------------------------------------------------------------
-// Version: Beta 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: Beta 1.10
+// Copyright (c) 2014 M4MSOFT
 // -----------------------------------------------------------------------------------------------------
 
 // Include C/C++ header files
@@ -43,14 +43,14 @@ using luaplayer::luaL_openplayerlibs;
 int SaveErrorToFile(const char * strPath, const char * strError);
 
 // Define the module info section
-PSP_MODULE_INFO("Big LuaPlayer", 0, 1, 1);
+PSP_MODULE_INFO("Big LuaPlayer v1.10", 0, 1, 1);
 
 // Define the main thread's attribute value (optional)
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
 
 // Define the heap of free memory.
 PSP_HEAP_SIZE_KB(20480); // 20 MB
-// PSP_HEAP_SIZE_KB(10240); // 10 MB
+//PSP_HEAP_SIZE_KB(10240); // 10 MB
 //PSP_HEAP_SIZE_MAX();
 
 // -----------------------------------------------------------------------------------------------------
@@ -58,6 +58,12 @@ PSP_HEAP_SIZE_KB(20480); // 20 MB
 int main(int argc, char *argv[])
 {
 	setupCallbacks(); // Set up the system callback thread.
+
+	// Start the graphics library.
+	g2dResetDrawTarget();
+	g2dClear(0x000000);
+	g2dFlip(0);
+
 	pspDebugScreenInit();
 	pspDebugScreenEnableBackColor(0);
 

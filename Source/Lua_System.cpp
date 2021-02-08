@@ -1,6 +1,6 @@
 // PSP Lua System ( FileName: Lua_System.cpp )
 // ------------------------------------------------------------------------
-// Version: 1.00
+// Version: 1.01
 // Copyright (c) 2012 M4MSOFT
 // ------------------------------------------------------------------------
 
@@ -75,6 +75,8 @@ static int lua_irdaWrite(lua_State *L);
 static int lua_irdaRead(lua_State *L);
 
 static int lua_irSendCmd(lua_State *L);
+
+static int lua_vfpuMath(lua_State * L);
 // -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
@@ -539,6 +541,29 @@ static int lua_irSendCmd(lua_State *L)
 }
 // -----------------------------------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------------------------------
+// Enable or disable VfpuMath function.
+static int lua_vfpuMath(lua_State * L)
+{
+	// Read the argument list.
+	int argc = lua_gettop(L);
+	if (argc != 1) return luaL_error(L, "Argument error: System.vfpuMath(enable) takes one argument.");
+	if (lua_toboolean(L, 1))
+	{
+		// Enable VfpuMath functions.
+		luaL_requiref(L, LUA_MATHLIBNAME, luaopen_VfpuMath, 1);
+		lua_pop(L, 1);  /* remove lib */
+	}
+	else
+	{
+		// Disable VfpuMath functions.
+		luaL_requiref(L, LUA_MATHLIBNAME, luaopen_math, 1);
+		lua_pop(L, 1);  /* remove lib */
+	}
+
+	return 0; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
 // Define the module table.
@@ -571,6 +596,8 @@ static const luaL_Reg mod_lib[] =
 	{"irdaRead", lua_irdaRead},
 
 	{"irSendCmd", lua_irSendCmd},
+
+	{"vfpuMath", lua_vfpuMath},
 	{NULL, NULL}
 };
 // -----------------------------------------------------------------------------------------------------
@@ -602,6 +629,9 @@ LUAMOD_API int luaopen_System(lua_State * L)
 		SetFieldString("intrafont", "flash0:/font")
 
 	lua_setfield(L, -2, "Directory");
+
+	// Set system version name.
+	SetFieldString("_VERSION", "Big Luaplayer v1.10")
 
     // Open the USB module.
 	luaL_requiref(L, LUA_USB_LIBNAME, luaopen_USB, 0);

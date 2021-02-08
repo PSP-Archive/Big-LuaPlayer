@@ -203,8 +203,12 @@ const char *luaO_pushvfstring (lua_State *L, const char *fmt, va_list argp) {
         break;
       }
       case 'f': {
-        setnvalue(L->top, cast_num(va_arg(argp, l_uacNumber)));
-        incr_top(L);
+#if defined(LUA_FLOAT_BUILD)
+        setnvalue(L->top, cast_num(va_arg(argp, double)));
+#else
+		setnvalue(L->top, cast_num(va_arg(argp, l_uacNumber)));
+#endif
+		incr_top(L);
         break;
       }
       case 'p': {

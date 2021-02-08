@@ -1,0 +1,68 @@
+Bug List Big Luaplayer:
+
+--------------------------------------------------------------------------------
+Version 1.00:
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+18-08/2014 - FIX ME -
+GL texture invalid source cordinates bug:
+	De GL Crop functie controleert niet of the texture source X, Y, Width
+	of Height waardes gelding zijn. Waardoor de PSP crashed tijdens het teken
+    van de texture. Dit gaat om de volgende functies.
+		GL.SetCropXY()
+		GL.SetCropWH()
+		GL.SetCrop()
+		GL.SetCropXYRealative()
+		GL.SetCropWHRelative()
+		GL.SetCropRelative()
+		GL.Addtex()
+		Tecture.Add()
+		Tecture.render()
+		screen.blit()
+	De fout kan worden opgelost door de Source X,Y,W,H waardes te controleren en
+	in de volgende functies van de GL libary.
+		void g2dSetCropXY(int x, int y)
+		void g2dSetCropWH(int w, int h)
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+18-08/2014 - SEARCH PROBLEEM - Fond and Fixed Bug at 21-09-2014, for Big Luaplayer version 1.10
+Sound libary bug:
+	PSP crashed tijdens het afsluiten van de sound libary in sommige gevallen.
+	Oorsprong probleem onbekend.
+
+	De functie Sound.buffer(voice, pos [,...]) accepteerde ook posities buiten het
+	bereik van de data buffer waardoor waardes konden worden overschreven of uitgelezen
+	die niet door de data buffer werden gebruikt. Dit kan mogelijk voor problemen zorgen
+	waardoor de PSP mogelijk kan crashen.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+24-08/2014 - FIX ME - Fixed at 05/09-2014, for Big Luaplayer version 1.01
+Lua_Font libary bug in function Font.reset:
+	De Font.reset() functie accepteerd het foute aantal aan argumenten. De
+	functie had nul argumenten moeten accepteerd maar accepteerd 1 argumenten.
+
+	De Fout kan worden opgelost door de if vergelijking in de functie
+	'static int lua_FontReset (lua_State * L)' aan te passen.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+24-08/2014 - FIX Me - Fixed at 05/09-2014, for Big Luaplayer version 1.01
+Lua_Font libary bug in function Font.name:
+	De Font.name() functie accepteerd ook het foute aantal aan argumenten. De
+	functie had alle maar 1 argumenten moeten accepteerd maar accepteerd ook
+	2 argumenten.
+
+	De Fout kan worden opgelost door de if vergelijking in de functie
+	'static int lua_FontName (lua_State * L)' aan te passen.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Version 1.01:
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Version 1.10:
+--------------------------------------------------------------------------------

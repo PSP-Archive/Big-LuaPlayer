@@ -1,7 +1,7 @@
 // Psp Sound library ( FileName: soundlib.h )
 // ------------------------------------------------------------------------
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 #ifndef __soundlib_h

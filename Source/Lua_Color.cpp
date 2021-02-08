@@ -1,7 +1,7 @@
 // PSP Lua Color ( FileName: Lua_Color.cpp )
 // ------------------------------------------------------------------------
-// Version: 1.00
-// Copyright (c) 2012 M4MSOFT
+// Version: 1.01
+// Copyright (c) 2014 M4MSOFT
 // ------------------------------------------------------------------------
 
 // Include the Lua header files for C++.
@@ -11,6 +11,7 @@
 // Select the luaplayer objects to use in this file.
 using luaplayer::luaL_newusermatatable;
 using luaplayer::clamp;
+using luaplayer::luaL_tonumber;
 
 // -----------------------------------------------------------------------------------------------------
 // Define the function prototypes
@@ -25,6 +26,14 @@ static int lua_ColorToNumber (lua_State * L);
 static int lua_ColorToString (lua_State * L);
 static int lua_ColorToStringf (lua_State * L);
 static int lua_ColorEqual (lua_State * L);
+
+static int lua_ColorAdd(lua_State * L);
+static int lua_ColorSub(lua_State * L);
+static int lua_ColorMul(lua_State * L);
+static int lua_ColorDiv(lua_State * L);
+static int lua_ColorMod(lua_State * L);
+static int lua_ColorUnm(lua_State * L);
+static int lua_ColorLt(lua_State * L);
 // -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
@@ -65,7 +74,17 @@ static int lua_ColorFromString (lua_State * L)
 	if (narg != 1) return luaL_error(L, "Argument error: Color.fromString(value) takes one argument.");
 
 	// Reset the Psp Color Data Buffer.
-	lua_Color clrData = luaL_checkunsigned(L, 1);
+	lua_Color clrData = 0x00000000;
+
+	// convert the value to a lua_Color
+	if (lua_type(L, 1) == LUA_TSTRING && lua_isnumber(L, 1))
+		clrData = luaL_tonumber(L, 1, 16);
+	else
+	{
+		// Read the R,G,B values of the number and set the A value to 0xff.
+		clrData |= (luaL_checkunsigned(L, 1) & 0x00ffffff);
+		clrData |= 0xff000000;
+	}
 
 	// Create the Color.
 	(*lua_pushColor(L)) = clrData;
@@ -210,6 +229,9 @@ static int lua_ColorToNumber (lua_State * L)
 	// get the Color Pointer.
 	lua_Color *clrPtr = luaL_checkColor(L, 1);
 
+	// turn the alpha color component off.
+	*clrPtr &= ~0xff000000;
+
 	// Return the color as a number.
 	lua_pushnumber(L, *clrPtr);
 
@@ -270,6 +292,100 @@ static int lua_ColorEqual (lua_State * L)
 	return 1; // Number of results.
 }
 // -----------------------------------------------------------------------------------------------------
+static int lua_ColorAdd(lua_State * L)
+{
+	// Read the argument list.
+	int narg = lua_gettop(L);
+	if (narg != 2) return luaL_error(L, "Argument error: Color.add(color_A, color_B) takes two arguments.");
+	lua_Color a = *luaL_checkColor(L, 1); lua_Color b = *luaL_checkColor(L, 2); lua_Color c = 0x00000000;
+	c |= ((G2D_GET_R(a) + G2D_GET_R(b)) & 0xff);
+	c |= ((G2D_GET_G(a) + G2D_GET_G(b)) & 0xff) << 8;
+	c |= ((G2D_GET_B(a) + G2D_GET_B(b)) & 0xff) << 16;
+	c |= ((G2D_GET_A(a) + G2D_GET_A(b)) & 0xff) << 24;
+	(*lua_pushColor(L)) = c;
+	return 1; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
+static int lua_ColorSub(lua_State * L)
+{
+	// Read the argument list.
+	int narg = lua_gettop(L);
+	if (narg != 2) return luaL_error(L, "Argument error: Color.sub(color_A, color_B) takes two arguments.");
+	lua_Color a = *luaL_checkColor(L, 1); lua_Color b = *luaL_checkColor(L, 2); lua_Color c = 0x00000000;
+	c |= ((G2D_GET_R(a) - G2D_GET_R(b)) & 0xff);
+	c |= ((G2D_GET_G(a) - G2D_GET_G(b)) & 0xff) << 8;
+	c |= ((G2D_GET_B(a) - G2D_GET_B(b)) & 0xff) << 16;
+	c |= ((G2D_GET_A(a) - G2D_GET_A(b)) & 0xff) << 24;
+	(*lua_pushColor(L)) = c;
+	return 1; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
+static int lua_ColorMul(lua_State * L)
+{
+	// Read the argument list.
+	int narg = lua_gettop(L);
+	if (narg != 2) return luaL_error(L, "Argument error: Color.mul(color_A, color_B) takes two arguments.");
+	lua_Color a = *luaL_checkColor(L, 1); lua_Color b = *luaL_checkColor(L, 2); lua_Color c = 0x00000000;
+	c |= ((G2D_GET_R(a) * G2D_GET_R(b)) & 0xff);
+	c |= ((G2D_GET_G(a) * G2D_GET_G(b)) & 0xff) << 8;
+	c |= ((G2D_GET_B(a) * G2D_GET_B(b)) & 0xff) << 16;
+	c |= ((G2D_GET_A(a) * G2D_GET_A(b)) & 0xff) << 24;
+	(*lua_pushColor(L)) = c;
+	return 1; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
+static int lua_ColorDiv(lua_State * L)
+{
+	// Read the argument list.
+	int narg = lua_gettop(L);
+	if (narg != 2) return luaL_error(L, "Argument error: Color.div(color_A, color_B) takes two arguments.");
+	lua_Color a = *luaL_checkColor(L, 1); lua_Color b = *luaL_checkColor(L, 2); lua_Color c = 0x00000000;
+	c |= (((G2D_GET_R(b) == 0) ? 0 : (G2D_GET_R(a) / G2D_GET_R(b))) & 0xff);
+	c |= (((G2D_GET_G(b) == 0) ? 0 : (G2D_GET_G(a) / G2D_GET_G(b))) & 0xff) << 8;
+	c |= (((G2D_GET_B(b) == 0) ? 0 : (G2D_GET_B(a) / G2D_GET_B(b))) & 0xff) << 16;
+	c |= (((G2D_GET_A(b) == 0) ? 0 : (G2D_GET_A(a) / G2D_GET_A(b))) & 0xff) << 24;
+	(*lua_pushColor(L)) = c;
+	return 1; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
+static int lua_ColorMod(lua_State * L)
+{
+	// Read the argument list.
+	int narg = lua_gettop(L);
+	if (narg != 2) return luaL_error(L, "Argument error: Color.mod(color_A, color_B) takes two arguments.");
+	lua_Color a = *luaL_checkColor(L, 1); lua_Color b = *luaL_checkColor(L, 2); lua_Color c = 0x00000000;
+	#define COLOR_MOD(x,y) ((x)-((((x)/(y))&0xff)*(y)))
+	c |= (((G2D_GET_R(b)==0) ? G2D_GET_R(a) : COLOR_MOD(G2D_GET_R(a), G2D_GET_R(b))) & 0xff);
+	c |= (((G2D_GET_G(b)==0) ? G2D_GET_G(a) : COLOR_MOD(G2D_GET_G(a), G2D_GET_G(b))) & 0xff) << 8;
+	c |= (((G2D_GET_B(b)==0) ? G2D_GET_B(a) : COLOR_MOD(G2D_GET_B(a), G2D_GET_B(b))) & 0xff) << 16;
+	c |= (((G2D_GET_A(b)==0) ? G2D_GET_A(a) : COLOR_MOD(G2D_GET_A(a), G2D_GET_A(b))) & 0xff) << 24;
+	(*lua_pushColor(L)) = c;
+	return 1; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
+static int lua_ColorUnm(lua_State * L)
+{
+	// Read the argument list. second argument is fake.
+	int narg = lua_gettop(L);
+	if (narg != 2) return luaL_error(L, "Argument error: Color.__unm(color_A) takes one argument.");
+	lua_Color a = *luaL_checkColor(L, 1); lua_Color c =  0x00000000;
+	c |= ((255 - G2D_GET_R(a)) & 0xff);
+	c |= ((255 - G2D_GET_G(a)) & 0xff) << 8;
+	c |= ((255 - G2D_GET_B(a)) & 0xff) << 16;
+	c |= G2D_GET_A(a) << 24;
+	(*lua_pushColor(L)) = c;
+	return 1; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
+static int lua_ColorLt(lua_State * L)
+{
+	// Read the argument list.
+	int narg = lua_gettop(L);
+	if (narg != 2) return luaL_error(L, "Argument error: Color.__lt(color_A, color_B) takes two arguments.");
+	lua_pushboolean(L, *luaL_checkColor(L, 1) < *luaL_checkColor(L, 2));
+	return 1; // Number of results.
+}
+// -----------------------------------------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------------------------------------
@@ -311,8 +427,16 @@ static const luaL_Reg Color_lib[] =
 	{"clone", lua_ColorClone},
 	{"tonumber", lua_ColorToNumber},
 	{"toString", lua_ColorToString},
+
 	{"__tostring", lua_ColorToStringf},
 	{"__eq", lua_ColorEqual},
+    {"__add", lua_ColorAdd},
+	{"__sub", lua_ColorSub},
+	{"__mul", lua_ColorMul},
+	{"__div", lua_ColorDiv},
+	{"__mod", lua_ColorMod},
+	{"__unm", lua_ColorUnm},
+	{"__lt", lua_ColorLt},
 	{NULL, NULL}
 };
 // -----------------------------------------------------------------------------------------------------

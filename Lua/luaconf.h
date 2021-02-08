@@ -394,14 +394,15 @@
 */
 
 #define LUA_NUMBER_DOUBLE
-#define LUA_NUMBER	double
+//#define LUA_NUMBER	double
+#define LUA_NUMBER	float
 
 /*
 @@ LUAI_UACNUMBER is the result of an 'usual argument conversion'
 @* over a number.
 */
-#define LUAI_UACNUMBER	double
-
+//#define LUAI_UACNUMBER	double
+#define LUAI_UACNUMBER	float
 
 /*
 @@ LUA_NUMBER_SCAN is the format for reading numbers.
@@ -437,8 +438,10 @@
 /* the following operations need the math library */
 #if defined(lobject_c) || defined(lvm_c)
 #include <math.h>
-#define luai_nummod(L,a,b)	((a) - floor((a)/(b))*(b))
-#define luai_numpow(L,a,b)	(pow(a,b))
+//#define luai_nummod(L,a,b)	((a) - floor((a)/(b))*(b))
+//#define luai_numpow(L,a,b)	(pow(a,b))
+#define luai_nummod(L,a,b)	(((b)==0.0f)?(a):((a) - floor((a)/(b))*(b)))
+#define luai_numpow(L,a,b)	(powf(a,b))
 #endif
 
 /* these are quite standard operations */
@@ -446,7 +449,8 @@
 #define luai_numadd(L,a,b)	((a)+(b))
 #define luai_numsub(L,a,b)	((a)-(b))
 #define luai_nummul(L,a,b)	((a)*(b))
-#define luai_numdiv(L,a,b)	((a)/(b))
+//#define luai_numdiv(L,a,b)	((a)/(b))
+#define luai_numdiv(L,a,b)	(((b)==0.0f)?0.0f:(a)/(b))
 #define luai_numunm(L,a)	(-(a))
 #define luai_numeq(a,b)		((a)==(b))
 #define luai_numlt(L,a,b)	((a)<(b))
@@ -550,7 +554,21 @@
 ** without modifying the main part of the file.
 */
 
+/* lbitlib.c - bitwise operations
+** number of bits to consider in a number
+** float interger persions = 2^24-1 = 16777215, so that
+** makes 24 bits for the bitwise operations to play with*/
+#define LUA_NBITS	24
 
+/* Define LUA_FLOAT_BUILD to prevent warnings building when
+** LUA_NUMBER defined as a float type. Has effect on the
+** luaO_pushvfstring function in the lobject.c file and
+** read_number function in liolib.c file*/
+#define LUA_FLOAT_BUILD
+
+/* macro 'l_tg' allows the addition of an 'l' or 'f' to all math operations */
+/* Add a f to all math operations.*/
+#define l_tg(x)		(x##f)
 
 #endif
 

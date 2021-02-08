@@ -17,6 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * This file has been added for the "Big LuaPlayer - project" and has more
+ * functions then the original 'gLib2D library Beta 5 version - created by geecko'.
+ * This library is used as the 2D graphics engine for the "Big LuaPlayer"
+ */
+
 #include "glib2d.h"
 
 #include <pspkernel.h>
@@ -109,6 +115,8 @@ typedef struct
 /* Local variables */
 
 static int *dlist;
+static PspGeContext __attribute__((aligned(16))) geContext;
+static int PspGuAllStatus = 0;
 
 static RenderContext rctx;
 
@@ -116,11 +124,12 @@ static Transform tstack[TSTACK_MAX];
 static unsigned int tstack_size;
 
 static bool init = false;
-static bool start = false;
+static char start = false;
+static char saveContext = false;
 static bool begin = false;
 static bool zclear = true;
 static bool scissor = false;
-static bool texturebuffer = false;
+static bool texturebuffer = true; // Force the glib2d library to reset the Draw target after first use.
 static g2dTexture *g2d_target_buffer = NULL;
 
 static float global_scale;
@@ -210,6 +219,20 @@ void _g2dStart()
     sceGuStart(GU_DIRECT, dlist);
 
 	start = true;
+}
+
+void _g2dStartContext()
+{
+    if (!init)
+        g2dInit();
+
+	sceGeSaveContext(&geContext);
+    sceKernelDcacheWritebackRange(dlist, DLIST_SIZE);
+    sceGuStart(GU_DIRECT, dlist);
+	PspGuAllStatus = sceGuGetAllStatus();
+
+	start = true;
+	saveContext = true;
 }
 
 
@@ -306,7 +329,8 @@ void g2dInit()
     sceGuDrawBuffer(GU_PSM_8888, vrelptr(g2d_draw_buffer.data), LINE_SIZE);
     sceGuDispBuffer(G2D_SCR_W, G2D_SCR_H, vrelptr(g2d_disp_buffer.data), LINE_SIZE);
     sceGuDepthBuffer(vrelptr(g2d_depht_buffer.data), LINE_SIZE);
-    sceGuOffset(2048-G2D_SCR_W/2, 2048-G2D_SCR_H/2);
+	//sceGuDrawBufferList(target->psm, vrelptr(target->data), target->tw); // Set draw buffer directly,
+	sceGuOffset(2048-G2D_SCR_W/2, 2048-G2D_SCR_H/2);
     sceGuViewport(2048, 2048, G2D_SCR_W, G2D_SCR_H);
 
     //g2d_draw_buffer.data = vabsptr(g2d_draw_buffer.data);
@@ -333,6 +357,8 @@ void g2dInit()
 
     g2dResetGlobalScale();
     g2dResetScissor();
+
+	//PspGuAllStatus = sceGuGetAllStatus();
 
     sceGuFinish();
     sceGuSync(0, 0);
@@ -364,6 +390,12 @@ void g2dStart()
 {
 	if (!start)
         _g2dStart();
+}
+
+void g2dStartContext()
+{
+	if (!start)
+        _g2dStartContext();
 }
 
 int g2dSetDrawTarget(g2dTexture *target)
@@ -828,8 +860,15 @@ void g2dCleanFinish()
 	if (!start) return;
 	begin = false;
 	if (texturebuffer) _g2dSetDrawTarget(NULL);
-	sceGuFinish();
-	sceGuSync(0, 0);
+	if (saveContext)
+	{
+		sceGuSetAllStatus(PspGuAllStatus);
+		sceGuFinish(); sceGuSync(0, 0);
+		sceGeRestoreContext(&geContext);
+		saveContext = false;
+	}
+	else
+		{sceGuFinish(); sceGuSync(0, 0);}
 	start = false;
 }
 
@@ -839,8 +878,15 @@ void g2dFinish()
 	if (!start) return;
 	if (begin) g2dEnd();
 	if (texturebuffer) _g2dSetDrawTarget(NULL);
-	sceGuFinish();
-	sceGuSync(0, 0);
+	if (saveContext)
+	{
+		sceGuSetAllStatus(PspGuAllStatus);
+		sceGuFinish(); sceGuSync(0, 0);
+		sceGeRestoreContext(&geContext);
+		saveContext = false;
+	}
+	else
+		{sceGuFinish(); sceGuSync(0, 0);}
 	start = false;
 }
 
@@ -853,8 +899,15 @@ void g2dFlip(int n)
 	{
 		if (begin) g2dEnd();
 		if (texturebuffer) _g2dSetDrawTarget(NULL);
-		sceGuFinish();
-		sceGuSync(0, 0);
+		if (saveContext)
+		{
+			sceGuSetAllStatus(PspGuAllStatus);
+			sceGuFinish(); sceGuSync(0, 0);
+			sceGeRestoreContext(&geContext);
+			saveContext = false;
+		}
+		else
+			{sceGuFinish(); sceGuSync(0, 0);}
 		start = false;
 	}
 

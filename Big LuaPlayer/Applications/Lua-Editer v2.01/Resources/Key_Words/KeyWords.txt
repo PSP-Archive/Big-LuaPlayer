@@ -1,0 +1,197 @@
+and
+assert(value, "error")
+local fnt =
+BmpFont.new()
+BmpFont.load("verdana.ttf", 16)
+BmpFont.fromImage("tex.png", 10, 10, nil, false)
+:texture()
+:height()
+:offsetX()
+:offsetY()
+:len()
+:glyph(1, {x, y, w, h, x0, y0, adv_x, adv_y})
+:charmap("", 1)
+:print()
+:measureText()
+:free()
+break
+collectgarbage("collect")
+local clr =
+Color.new(0, 0, 0, 255)
+Color.fromString("0xff000000")
+:clone()
+:red()
+:green()
+:blue()
+:alpha()
+:clone()
+:tonumber()
+:toString()
+Controls.samplingCycle(0)
+Controls.MODE_ANALOG
+Controls.MODE_DIGITAL
+Controls.samplingMode(1)
+Controls.read()
+Controls.readPeek()
+Controls.timeStamp()
+Controls.analogx()
+Controls.analogy()
+Controls.buttons()
+Controls.delta()
+Controls.press()
+Controls.held()
+Controls.release()
+Controls.SELECT
+Controls.START
+Controls.UP
+Controls.RIGHT
+Controls.DOWN
+Controls.LEFT
+Controls.LTRIGGER
+Controls.RTRIGGER
+Controls.TRIANGLE
+Controls.CIRCLE
+Controls.CROSS
+Controls.SQUARE
+Controls.PAD
+Controls.BUTTON
+Controls.ALL
+Controls.HOME
+do
+dofile(path)
+dostring("")
+end
+else
+elseif
+error("error")
+false
+for
+for n = 1, nMax, step do end
+for i,v in ipairs(tbl) do end
+for i,v in pairs(tbl) do end
+function()
+local function Func() end
+goto
+if
+if value == 0 then end
+if value == 0 then else end
+in
+io.open(Path, "r")
+:close()
+:flush()
+:lines()
+:write()
+:write(string.format("%s%s", strText, "\n"))
+io.lines()
+for line in io.lines(path) do end
+ipairs()
+loadfile(path)
+loadstring("")
+local
+local value = 0
+math.abs(x)
+math.acos(x)
+math.asin(x)
+math.atan(x)
+math.atan2(y, x)
+math.ceil(x)
+math.cosh(x)
+math.deg(x)
+math.exp(x)
+math.floor(x)
+math.fmod(x, y)
+math.frexp(x)
+math.huge
+math.ldexp(m, e)
+math.log(x , base)
+math.max(a, b)
+math.min(a, b)
+math.modf(x)
+math.pi
+math.pow(x, y)
+math.rad(x)
+math.random(1, 10)
+math.randomseed(os.time())
+math.sin(x)
+math.sinh(x)
+math.sqrt(x)
+math.tan(x)
+math.tanh(x)
+next
+nil
+not
+os.clock()
+os.date("!*t")
+os.date("!*t").month
+os.date("!*t").day
+os.date("!*t").hour
+os.date("!*t").min
+os.date("!*t").sec
+os.date("!*t").wday
+os.date("!*t").isdst
+or
+pairs()
+Power.cpuSpeed(100)
+repeat until value == true
+require "screen"
+screen.blit(0, 0, tex, 255)
+screen.drawLine(0, 0, 480, 272, color)
+screen.drawRect(0, 0, 480, 272, color)
+screen.fillRect(0, 0, 480, 272, color)
+screen.print(0, 0, strText, color)
+screen.clear()
+screen.slowClear()
+screen.waitVblankStart()
+screen.flip()
+screen.save("ScreenShot.png")
+screen = screen.dipose()
+System.Directory.flash
+System.Directory.ms0
+System.Directory.eboot
+System.Directory.eboot.."/System/"
+System.Directory.eboot.."/System/BmpFont/"
+System.Directory.eboot.."/System/Font/"
+System.Directory.eboot.."/System/Image/"
+System.Directory.eboot.."/System/Library/"
+System.Directory.eboot.."/System/Sound/"
+System.createDirectory(path)
+System.currentDirectory(path)
+System.listDirectory(path)
+System.removeDirectory(path)
+System.removeFile(path)
+System.rename(oldpath, newPath)
+System.sleep(ms)
+System.running()
+System.exit()
+System.Memory.freeRam()
+System.Memory.freeVram()
+string.format("Name: %s", value)
+string.find(value, "&")
+string.len()
+string.lower()
+string.reverse()
+string.sub(value, 1, -1)
+string.upper()
+local tmr =
+Timer.new()
+:start()
+:update()
+:delta()
+:time()
+:stop()
+:reset()
+:free()
+then
+tostring(Value)
+tonumber( "25", 10)
+true
+Utility.msgShow(text)
+if Utility.msgShow("Question?", 272) then end
+local result, new_text =
+Utility.oskShow("Enter Name:","")
+if result ~= 1 then end
+Utility.OSK_RESULT_UNCHANGED
+Utility.OSK_RESULT_CANCELLED
+Utility.OSK_RESULT_CHANGED
+while
+while value == true do end

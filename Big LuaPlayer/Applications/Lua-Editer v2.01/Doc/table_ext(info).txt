@@ -1,0 +1,259 @@
+---------------------------------------------------
+-- table_ext˜ Module function.
+---------------------------------------------------
+
+
+
+---- Load and dispose:  ---------------------------
+  -- Use the require function to load the module:
+   table_ext = require "table_ext"
+
+  -- Use the dispose function to dispose the
+  -- module. (option 1):
+   table_ext = table_ext.dispose()
+  -- (option 2):
+   table_ext = table.dispose()
+---------------------------------------------------
+
+
+
+---- Functions: -----------------------------------
+ -- string functions:
+  string.enclose(s [, l])
+   -- Enclose string by long brakets.
+   --  Arguments:
+   --   s: as string.
+   --   l: the max lenght of the brakets as
+   --        number. (Default: infintie)
+   --  Returns the enclosed string.
+
+ -- table functions:
+  table.size(t)
+   -- Find the number of elements in a table.
+   --  Arguments: t: as table.
+   -- Returns the number of elements in t.
+
+  table.createEmpty(v [, l [, ...]])
+   -- Create a empty table.
+   --  Arguments:
+   --   v: The default table value.
+   --   l: The table size as number.
+   -- Returns the created table.
+   --  The createEmpty function uses the
+   --  table.clone function to clone the argument
+   --  'v' and then inserts the cloned argument 'v'
+   --  in to the table. (see sample function.)
+   --
+   --   function sample_createEmpty(v ,l)
+   --       local t = {}
+   --       for n = 1, l do
+   --           t[n] = table.clone(v)
+   --       end
+   --       return t
+   --   end
+   --
+
+  table.load(path)
+   -- Load the data or table from a file.
+   --  Arguments: path: The file name as string.
+   -- Returns the data or table.
+   --  The load function returns a empty table if
+   --  the file can't be loaded. References in the
+   --  table will be restored with the unpickle
+   --  function. (see sample function.)
+   --
+   --   function sample_load(path)
+   --       local t = {}
+   --       local script = loadfile(path)
+   --       if script then
+   --           t = unpickle(script()) or {}
+   --       end
+   --       return t
+   --   end
+   --
+
+  table.save(t, path)
+   -- Save the data or table to a file.
+   --  Arguments:
+   --   t: The data or table.
+   --   path: The file name as string.
+   -- Returns a nil value.
+   --  The save function first pickles the data or
+   --  table and then saves the pickled table.
+   --  Functions, Userdata and indices of these
+   --  will not be saved. Strings will be converted
+   --  to enclosed long brakets, makes it easier to
+   --  save regarding special chars. References are
+   --  preserved. (see sample function.)
+   --
+   --   function sample_save(t, path)
+   --       local file = io.open(path, "w")
+   --       if file then
+   --           t = pickle(t)
+   --           filew:writetable(t)
+   --           file:close()
+   --       end
+   --   end
+   --
+
+  table.clone(t [, nometa])
+   -- Clone the table including metatables or
+   -- return the data.
+   --  Arguments:
+   --   t: The data or table.
+   --   nometa: if nometa is not nil then don't
+   --   copy the metatable. (Default: false)
+   -- Returns the data or cloned table.
+
+  table.clear(t, v)
+   -- Clear the table.
+   --  Arguments:
+   --   t: as table.
+   --   v: The default table value.
+   -- Returns the cleared table.
+
+  table.isEmpty(t)
+   -- Check if the table is a empty table.
+   --  Arguments: t: The data or table.
+   -- Returns true if the table is empty or if
+   -- argument 't' is not a table.
+
+  table.free()
+   -- Free the table.
+   --  Arguments: t: as table.
+   -- Returns a nil value.
+
+  table.dispose()
+   -- Remove the module.
+   --  Arguments: takes no arguments
+   -- Returns a nil value.
+
+  table._ext._VERSION = "1.01"
+   -- The current version of the module.
+
+---------------------------------------------------
+
+
+
+---- Code samples: --------------------------------
+
+
+ ---- load a user profile: ------------------------
+  -- define the default user profile.
+  local Profile = {name = "Unknow",
+				   credits = 0,
+				   saved = false}
+  -- Try to load the user profile.
+  local MyProfile = table.load("user.txt") or false
+  -- Check if the profile is loaded correctly.
+  if table.isEmpty(MyProfile) then
+	  -- Clone the default profile if the profile
+	  -- has not beenloaded.
+	  MyProfile = table.clone(Profile)
+  end
+  -- Check if the profile has been saved.
+  if MyProfile.saved then
+	  MyProfile.saved = true
+	  -- Save the profile.
+	  table.save(MyProfile, "user.txt")
+  end
+  -- Free the profile. (option 1)
+  Profile = table.free(Profile)
+  MyProfile = table.free(MyProfile)
+  -- Free the profile. (option 2)
+  Profile = nil
+  MyProfile = nil
+  -- The profile can be disposed with the
+  -- table.free function, but option 2 will do the
+  -- same job faster.
+ --------------------------------------------------
+
+
+ ---- create a field: -----------------------------
+  -- Create a empty field (size: 25*25)
+  local field = table.createEmpty(0, 25, 25)
+  -- Change the field data.
+  math.randomseed(os.clock())
+  local x,y,nMax = 0,0,math.random(10,100)
+  for n = 1, nMax do
+	  x,y = math.random(1,25), math.random(1,25)
+	  field[x][y] = math.random(1,25)
+  end
+  x,y,nMax = nil,nil,nil
+  -- Print the field data.
+  for x, tv in ipairs(field) do
+	  for y, v in ipairs(tv) do
+		  print( string.format("x,y=%d,%d v=%d",
+							   x, y, v) )
+	  end
+  end
+  -- Clear the field data.
+  table.clear(field, 0)
+  -- Free the field.
+  field = nil
+ --------------------------------------------------
+
+
+ ---- clone metatable: ----------------------------
+  -- define a object.
+  local object = {name = "unknow", id = 0}
+  -- define the metatable.
+  local objectmeta = {__index = object}
+  -- define the new object function.
+  function object.new()
+	 return setmetatable ({}, objectmeta)
+  end
+  -- define the object print function.
+  function object:print()
+	  print("name: "..self.name.." id: "..self.id)
+  end
+
+  -- Create a new object.
+  MyObject = object.new()
+  -- Get the size of the table.
+  local n = table.size(MyObject) -- (n = 0)
+   -- Prlnt the object.
+  MyObject:print() -- name: unknow id: 0
+  --Set the name of the object.
+  MyObject.name = string.enclose("Cup")
+  -- Get the size of the table.
+  n = table.size(MyObject) -- (n = 1)
+  -- Prlnt the object.
+  MyObject:print() -- name: [[Cup]] id: 0
+
+  -- Clone the object and metatable.
+  local MyGoodClone = table.clone(MyObject)
+  -- Get the size of the table.
+  n = table.size(MyGoodClone) -- (n = 1)
+  -- Prlnt the cloned object.
+  MyGoodClone:print() -- name: [[Cup]] id: 0
+  --Free the cloned object.
+  MyGoodClone = nil
+
+  -- Clone the object without the metatable.
+  local MyBadClone = table.clone(MyObject, true)
+  -- Get the size of the table.
+  n = table.size(MyBadClone) -- (n = 1)
+  -- Try to prlnt the cloned object.
+  local fnc = MyBadClone.print -- (fnc = nil)
+  if fnc then
+	  MyBadClone:print()
+	  -- error: try to call a nil method.
+  else
+	  -- the object needs the metatable to find the
+	  -- print function. Without the metatable the
+	  -- object can"t use the print method.
+  end
+  --Free the cloned object.
+  MyBadClone = nil
+
+  --Free the object.
+  n = nil
+  MyObject = nil
+  objectmeta = nil
+  object = nil
+ --------------------------------------------------
+
+---------------------------------------------------
+
+

@@ -1,0 +1,19 @@
+--Set the 'type' dialog button speed. (ms)
+App_TypeSleep=85
+App_TypeButtonSleep=45
+--Set the 'type' dialog button held counter. (range: 0-100)
+App_TypeCount=10
+
+--Set the curror button speed. (ms)
+App_CursorSleep=6
+
+--Set the application button speed. (ms)
+App_Sleep=75
+App_ButtonSleep=8
+--Set the application button held counter. (range: 0-100)
+App_Count=10
+
+--Set the trigger and menu button speed. (ms)
+App_TriggerSleep=45
+App_MenuSleep=25
+
